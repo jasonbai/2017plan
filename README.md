@@ -13,17 +13,17 @@
 
 ## 课程
 #####  数据分析师
-- [ ]Udacity [计算机科学导论](https://cn.udacity.com/course/intro-to-computer-science--cs101) 约72h
-- [ ]Udacity [描述统计学入门](https://cn.udacity.com/course/intro-to-descriptive-statistics--ud827) 约48h
-- [ ]Udacity [推论统计学入门](https://cn.udacity.com/course/linear-algebra-refresher-course--ud953) 约48h
-- [ ]Udactiy [数据科学入门](https://cn.udacity.com/course/intro-to-data-science--ud359) 约48h
-- [ ]Udactiy 纳米学位-[数据分析师](https://cn.udacity.com/course/data-analyst-nanodegree--nd002) 约 240h
+- [ ] Udacity [计算机科学导论](https://cn.udacity.com/course/intro-to-computer-science--cs101) 约72h
+- [ ] Udacity [描述统计学入门](https://cn.udacity.com/course/intro-to-descriptive-statistics--ud827) 约48h
+- [ ] Udacity [推论统计学入门](https://cn.udacity.com/course/linear-algebra-refresher-course--ud953) 约48h
+- [ ] Udactiy [数据科学入门](https://cn.udacity.com/course/intro-to-data-science--ud359) 约48h
+- [ ] Udactiy 纳米学位-[数据分析师](https://cn.udacity.com/course/data-analyst-nanodegree--nd002) 约 240h
 
 ##### 机器学习工程师
-- [ ]Udacity [统计学入门](https://cn.udacity.com/course/intro-to-statistics--st101) 48h
-- [ ]Udacity [机器学习入门](https://cn.udacity.com/course/intro-to-machine-learning--ud120) 60h
-- [ ]Udacity [基础线性代数](https://cn.udacity.com/course/linear-algebra-refresher-course--ud953) 96h
-- [ ]Udacity 纳米学位-[机器学习工程师](https://cn.udacity.com/course/machine-learning-engineer-nanodegree--nd009) 420h
+- [ ] Udacity [统计学入门](https://cn.udacity.com/course/intro-to-statistics--st101) 48h
+- [ ] Udacity [机器学习入门](https://cn.udacity.com/course/intro-to-machine-learning--ud120) 60h
+- [ ] Udacity [基础线性代数](https://cn.udacity.com/course/linear-algebra-refresher-course--ud953) 96h
+- [ ] Udacity 纳米学位-[机器学习工程师](https://cn.udacity.com/course/machine-learning-engineer-nanodegree--nd009) 420h
 
 
 ## 资源
