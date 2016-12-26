@@ -9,11 +9,21 @@
 - [这是？](#这是)
 - [计划的课程](#课程)
 - [资源](#资源)
+- [书单](#书单)
+- [技能](#技能)
 
 
 ## 课程
 #####  数据分析师
 - [ ] Udacity [计算机科学导论](https://cn.udacity.com/course/intro-to-computer-science--cs101) 约72h
+   - [ ] lesson 1
+   - [ ] lesson 2
+   - [ ] lesson 3
+   - [ ] lesson 4
+   - [ ] lesson 5
+   - [ ] lesson 6
+   - [ ] lesson 7
+   - [ ] Project Prep
 - [ ] Udacity [描述统计学入门](https://cn.udacity.com/course/intro-to-descriptive-statistics--ud827) 约48h
 - [ ] Udacity [推论统计学入门](https://cn.udacity.com/course/linear-algebra-refresher-course--ud953) 约48h
 - [ ] Udactiy [数据科学入门](https://cn.udacity.com/course/intro-to-data-science--ud359) 约48h
@@ -28,4 +38,13 @@
 
 ## 资源
 
-阿斯顿发斯蒂芬
+#### 有趣的项目
+- [Google Interview University](https://github.com/jwasham/google-interview-university)
+
+## 书单
+- [ ] 《R in Action》
+- [ ] 《机器学习与R语言》
+- [ ] 《数学之美》
+
+## 技能
+- [Mastering Markdown](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown)
