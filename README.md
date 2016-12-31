@@ -18,7 +18,7 @@
 
 ###  数据分析师
 - [ ] Udacity [计算机科学导论](https://cn.udacity.com/course/intro-to-computer-science--cs101) 约72h
-   - [x] lesson 1  *2017.12.31 finished*
+   - [x] lesson 1 ____ **2017.12.31 finished**
    - [ ] lesson 2
    - [ ] lesson 3
    - [ ] lesson 4
@@ -50,3 +50,4 @@
 
 ## 技能
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown)
+- [git - 简明指南](http://rogerdudler.github.io/git-guide/index.zh.html)
