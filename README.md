@@ -14,9 +14,11 @@
 
 
 ## 课程
-#####  数据分析师
+主要是从Udacity上进行系统性的课程学习。
+
+###  数据分析师
 - [ ] Udacity [计算机科学导论](https://cn.udacity.com/course/intro-to-computer-science--cs101) 约72h
-   - [ ] lesson 1
+   - [x] lesson 1  *2017.12.31 finished*
    - [ ] lesson 2
    - [ ] lesson 3
    - [ ] lesson 4
@@ -29,7 +31,7 @@
 - [ ] Udactiy [数据科学入门](https://cn.udacity.com/course/intro-to-data-science--ud359) 约48h
 - [ ] Udactiy 纳米学位-[数据分析师](https://cn.udacity.com/course/data-analyst-nanodegree--nd002) 约 240h
 
-##### 机器学习工程师
+### 机器学习工程师
 - [ ] Udacity [统计学入门](https://cn.udacity.com/course/intro-to-statistics--st101) 48h
 - [ ] Udacity [机器学习入门](https://cn.udacity.com/course/intro-to-machine-learning--ud120) 60h
 - [ ] Udacity [基础线性代数](https://cn.udacity.com/course/linear-algebra-refresher-course--ud953) 96h
