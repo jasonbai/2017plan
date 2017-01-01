@@ -1,7 +1,9 @@
 # 2017plan
 
 ## 这是？
-这是我2017年计划做的事情，主要是数据分析的技能进而能够达到机器学习的入门条件。预计2017年一整年都需要执行这个计划。
+这是我2017年计划做的事情，主要是数据分析的技能进而能够达到机器学习的入门条件。同时业余时间进行全栈工程师的练习。
+
+预计2017年一整年都需要执行这个计划。
 
 这个计划使用搭建在Github上面，灵感来自[Google Interview University](https://github.com/jwasham/google-interview-university) ，完成项目后利用[flavored markdown](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown)的任务列表语言功能进行项目进度跟踪，并标注完成日期。
 
@@ -42,6 +44,24 @@
 - [ ] Udacity [基础线性代数](https://cn.udacity.com/course/linear-algebra-refresher-course--ud953) 96h
 - [ ] Udacity 纳米学位-[机器学习工程师](https://cn.udacity.com/course/machine-learning-engineer-nanodegree--nd009) 420h
 
+### 全栈工程师
+> 课程来自https://www.freecodecamp.com
+
+- [ ] Front End Development Certification
+   - [ ] HTML5 and CSS (5 hours)
+   - [ ] Responsive Design with Bootstrap (5 hours)
+   - [ ] Gear up for Success (20 minutes)
+   - [ ] jQuery (3 hours)
+   - [ ] Basic Front End Development Projects (50 hours)
+   - [ ] Basic JavaScript (10 hours)
+   - [ ] Object Oriented and Functional Programming (2 hours)
+   - [ ] Basic Algorithm Scripting (50 hours)
+   - [ ] JSON APIs and Ajax (2 hours)
+   - [ ] Intermediate Front End Development Projects (100 hours)
+   - [ ] Intermediate Algorithm Scripting (50 hours)
+   - [ ] Advanced Algorithm Scripting (50 hours)
+   - [ ] Advanced Front End Development Projects (150 hours)
+   - [ ] Claim Your Front End Development Certificate (5 minutes)
 
 ## 资源
 
@@ -58,5 +78,3 @@
 ## 技能
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown)
 - [git - 简明指南](http://rogerdudler.github.io/git-guide/index.zh.html)
-
-
