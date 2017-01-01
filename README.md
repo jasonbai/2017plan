@@ -5,6 +5,8 @@
 
 这个计划使用搭建在Github上面，灵感来自[Google Interview University](https://github.com/jwasham/google-interview-university) ，完成项目后利用[flavored markdown](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown)的任务列表语言功能进行项目进度跟踪，并标注完成日期。
 
+除此之外，部分的阅读计划和项目纪录也将在此相应纪录。
+
 ---
 
 ## 目录
@@ -21,7 +23,7 @@
 
 ###  数据分析师
 - [ ] Udacity [计算机科学导论](https://cn.udacity.com/course/intro-to-computer-science--cs101) 约72h
-   - [x] lesson 1 ____ *2017.12.31 finished*
+   - [x] lesson 1 ____ *2016.12.31 finished*
    - [ ] lesson 2
    - [ ] lesson 3
    - [ ] lesson 4
@@ -50,6 +52,8 @@
 - [ ] 《R in Action》
 - [ ] 《机器学习与R语言》
 - [ ] 《数学之美》
+- [ ] 《文明之光 1》
+- [ ] 《机器学习与R语言实战》
 
 ## 技能
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown)
