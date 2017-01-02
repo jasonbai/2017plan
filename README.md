@@ -48,7 +48,7 @@
 > 课程来自https://www.freecodecamp.com
 
 - [ ] Front End Development Certification
-   - [ ] HTML5 and CSS (5 hours)
+   - [ ] HTML5 and CSS (5 hours) ____ *2016.1.2 finished* 
    - [ ] Responsive Design with Bootstrap (5 hours)
    - [ ] Gear up for Success (20 minutes)
    - [ ] jQuery (3 hours)
