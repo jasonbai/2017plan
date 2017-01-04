@@ -17,6 +17,7 @@
 - [资源](#资源)
 - [书单](#书单)
 - [技能](#技能)
+- [里程碑](#里程碑)
 
 ---
 
@@ -48,9 +49,9 @@
 > 课程来自https://www.freecodecamp.com
 
 - [ ] Front End Development Certification
-   - [ ] HTML5 and CSS (5 hours) ____ *2016.1.2 finished* 
-   - [ ] Responsive Design with Bootstrap (5 hours)
-   - [ ] Gear up for Success (20 minutes)
+   - [x] HTML5 and CSS (5 hours) ____ *2016.1.2 finished*
+   - [x] Responsive Design with Bootstrap (5 hours) ____ *2016.1.4 finished*
+   - [x] Gear up for Success (20 minutes) ____ *2016.1.4 finished*
    - [ ] jQuery (3 hours)
    - [ ] Basic Front End Development Projects (50 hours)
    - [ ] Basic JavaScript (10 hours)
@@ -78,3 +79,5 @@
 ## 技能
 - [Mastering Markdown](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown)
 - [git - 简明指南](http://rogerdudler.github.io/git-guide/index.zh.html)
+
+## 里程碑
