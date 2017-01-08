@@ -27,7 +27,7 @@
 ###  数据分析师
 - [ ] Udacity [计算机科学导论](https://cn.udacity.com/course/intro-to-computer-science--cs101) 约72h
    - [x] lesson 1 ____ *2016.12.31 finished*
-   - [ ] lesson 2
+   - [x] lesson 2 ____ *2017.1.8 finished*
    - [ ] lesson 3
    - [ ] lesson 4
    - [ ] lesson 5
@@ -54,7 +54,7 @@
    - [x] HTML5 and CSS (5 hours) ____ *2016.1.2 finished*
    - [x] Responsive Design with Bootstrap (5 hours) ____ *2016.1.4 finished*
    - [x] Gear up for Success (20 minutes) ____ *2016.1.4 finished*
-   - [ ] jQuery (3 hours)
+   - [x] jQuery (3 hours)____ *2016.1.7 finished*
    - [ ] Basic Front End Development Projects (50 hours)
    - [ ] Basic JavaScript (10 hours)
    - [ ] Object Oriented and Functional Programming (2 hours)
