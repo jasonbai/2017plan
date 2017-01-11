@@ -28,7 +28,7 @@
 - [ ] Udacity [计算机科学导论](https://cn.udacity.com/course/intro-to-computer-science--cs101) 约72h
    - [x] lesson 1 ____ *2016.12.31 finished*
    - [x] lesson 2 ____ *2017.1.8 finished*
-   - [ ] lesson 3
+   - [x] lesson 3 ____ *2017.1.12 finished*
    - [ ] lesson 4
    - [ ] lesson 5
    - [ ] lesson 6
