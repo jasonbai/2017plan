@@ -29,7 +29,7 @@
    - [x] lesson 1 ____ *2016.12.31 finished*
    - [x] lesson 2 ____ *2017.1.8 finished*
    - [x] lesson 3 ____ *2017.1.12 finished*
-   - [ ] lesson 4
+   - [x] lesson 4 ____ *2017.1.16 finished*
    - [ ] lesson 5
    - [ ] lesson 6
    - [ ] lesson 7
@@ -84,5 +84,4 @@
 
 ## 里程碑
 - 2016年1月6日 建立了本项目的[wiki页面](https://github.com/jasonbai/2017plan/wiki)
-- 2016年1月12日  建立基于Github，Sublime text 整体的作业工作流
 - 2016年1月15日  [个人站点](http://jasonbai.me) 上线，http://jasonbai.me 
