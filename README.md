@@ -30,7 +30,7 @@
    - [x] lesson 2 ____ *2017.1.8 finished*
    - [x] lesson 3 ____ *2017.1.12 finished*
    - [x] lesson 4 ____ *2017.1.16 finished*
-   - [ ] lesson 5
+   - [ ] lesson 5 ____ *2017.1.31 finished*
    - [ ] lesson 6
    - [ ] lesson 7
    - [ ] Project Prep
