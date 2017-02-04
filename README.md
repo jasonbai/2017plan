@@ -31,7 +31,7 @@
    - [x] lesson 3 ____ *2017.1.12 finished*
    - [x] lesson 4 ____ *2017.1.16 finished*
    - [x] lesson 5 ____ *2017.1.31 finished*
-   - [ ] lesson 6
+   - [x] lesson 6 ____ *2017.2.4 finished*
    - [ ] lesson 7
    - [ ] Project Prep
 - [ ] Udacity [描述统计学入门](https://cn.udacity.com/course/intro-to-descriptive-statistics--ud827) 约48h
