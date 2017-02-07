@@ -33,7 +33,6 @@
    - [x] lesson 5 ____ *2017.1.31 finished*
    - [x] lesson 6 ____ *2017.2.4 finished*
    - [x] lesson 7 ____ *2017.2.7 finished*
-   - [ ] Project Prep
 - [ ] Udacity [描述统计学入门](https://cn.udacity.com/course/intro-to-descriptive-statistics--ud827) 约48h
 - [ ] Udacity [推论统计学入门](https://cn.udacity.com/course/linear-algebra-refresher-course--ud953) 约48h
 - [ ] Udactiy [数据科学入门](https://cn.udacity.com/course/intro-to-data-science--ud359) 约48h
