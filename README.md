@@ -25,7 +25,7 @@
 主要是从Udacity上进行系统性的课程学习。虽然以前有编程基础，但是从来没有进行系统化学习，借这次机会，进行重新梳理。
 
 ###  数据分析师
-- [ ] Udacity [计算机科学导论](https://cn.udacity.com/course/intro-to-computer-science--cs101) 约72h
+- [x] Udacity [计算机科学导论](https://cn.udacity.com/course/intro-to-computer-science--cs101) 约72h
    - [x] lesson 1 ____ *2016.12.31 finished*
    - [x] lesson 2 ____ *2017.1.8 finished*
    - [x] lesson 3 ____ *2017.1.12 finished*
@@ -34,6 +34,13 @@
    - [x] lesson 6 ____ *2017.2.4 finished*
    - [x] lesson 7 ____ *2017.2.7 finished*
 - [ ] Udacity [描述统计学入门](https://cn.udacity.com/course/intro-to-descriptive-statistics--ud827) 约48h
+  - [ ] lesson 1
+  - [ ] lesson 2
+  - [ ] lesson 3
+  - [ ] lesson 4
+  - [ ] lesson 5
+  - [ ] lesson 6
+  - [ ] lesson 7
 - [ ] Udacity [推论统计学入门](https://cn.udacity.com/course/linear-algebra-refresher-course--ud953) 约48h
 - [ ] Udactiy [数据科学入门](https://cn.udacity.com/course/intro-to-data-science--ud359) 约48h
 - [ ] Udactiy 纳米学位-[数据分析师](https://cn.udacity.com/course/data-analyst-nanodegree--nd002) 约 240h
