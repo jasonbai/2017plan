@@ -16,7 +16,7 @@
 - [计划的课程](#课程)
 - [资源](#资源)
 - [书单](#书单)
-- [技能](#技能)P
+- [技能](#技能)
 - [里程碑](#里程碑)
 
 ---
@@ -84,4 +84,4 @@
 ## 里程碑
 - 2017年1月6日 建立了本项目的[wiki页面](https://github.com/jasonbai/2017plan/wiki)
 - 2017年1月15日  [个人站点](http://jasonbai.me) 上线，http://jasonbai.me
-- 2017年2月7日  [完结计算机科学导论](http://www.jasonbai.com/2017/02/07/intro-to-computer-science--note)
+- 2017年2月7日  [完结《计算机科学导论》](http://www.jasonbai.com/2017/02/07/intro-to-computer-science--note)
