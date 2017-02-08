@@ -34,7 +34,7 @@
    - [x] lesson 6 ____ *2017.2.4 finished*
    - [x] lesson 7 ____ *2017.2.7 finished*
 - [ ] Udacity [描述统计学入门](https://cn.udacity.com/course/intro-to-descriptive-statistics--ud827) 约48h
-  - [ ] lesson 1
+  - [x] lesson 1 ____ *2017.2.8 finished*
   - [ ] lesson 2
   - [ ] lesson 3
   - [ ] lesson 4
