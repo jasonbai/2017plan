@@ -37,7 +37,7 @@
   - [x] lesson 1 ____ *2017.2.8 finished*
   - [x] lesson 2 ____ *2017.2.9 finished*
   - [x] lesson 3 ____ *2017.2.10 finished*
-  - [ ] lesson 4
+  - [x] lesson 4 ____ *2017.2.12 finished*
   - [ ] lesson 5
   - [ ] lesson 6
   - [ ] lesson 7
