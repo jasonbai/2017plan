@@ -33,19 +33,17 @@
    - [x] lesson 5 ____ *2017.1.31 finished*
    - [x] lesson 6 ____ *2017.2.4 finished*
    - [x] lesson 7 ____ *2017.2.7 finished*
-- [ ] Udacity [描述统计学入门](https://cn.udacity.com/course/intro-to-descriptive-statistics--ud827) 约48h
+- [x] Udacity [描述统计学入门](https://cn.udacity.com/course/intro-to-descriptive-statistics--ud827) 约48h
   - [x] lesson 1 ____ *2017.2.8 finished*
   - [x] lesson 2 ____ *2017.2.9 finished*
   - [x] lesson 3 ____ *2017.2.10 finished*
   - [x] lesson 4 ____ *2017.2.12 finished*
-  - [ ] lesson 5
-  - [ ] lesson 6
-  - [ ] lesson 7
+  后续并入[数据分析师](https://cn.udacity.com/course/data-analyst-nanodegree--nd002)课程
 - [ ] Udacity [推论统计学入门](https://cn.udacity.com/course/linear-algebra-refresher-course--ud953) 约48h
 - [ ] Udactiy [数据科学入门](https://cn.udacity.com/course/intro-to-data-science--ud359) 约48h
 - [ ] Udactiy 纳米学位-[数据分析师](https://cn.udacity.com/course/data-analyst-nanodegree--nd002) 约 240h
   - [x] P0 ____ *2017.2.15 finished*
-  - [ ] P1
+  - [x] P1 ____ *2017.3.2 finished*
   - [ ] P2
   - [ ] P3
   - [ ] P4
