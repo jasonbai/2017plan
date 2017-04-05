@@ -49,7 +49,7 @@
   - [ ] P4
   - [ ] P5
   - [ ] P6
-  - [ ] P7
+  - [x] P7 ____ *2017.3.20 finished*
 ### 机器学习工程师
 - [ ] Udacity [统计学入门](https://cn.udacity.com/course/intro-to-statistics--st101) 48h
 - [ ] Udacity [机器学习入门](https://cn.udacity.com/course/intro-to-machine-learning--ud120) 60h
