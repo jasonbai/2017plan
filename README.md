@@ -44,7 +44,7 @@
 - [ ] Udactiy 纳米学位-[数据分析师](https://cn.udacity.com/course/data-analyst-nanodegree--nd002) 约 240h
   - [x] P0 ____ *2017.2.15 finished*
   - [x] P1 ____ *2017.3.2 finished*
-  - [ ] P2
+  - [x] P2 ____ *2017.4.9 finished*
   - [ ] P3
   - [ ] P4
   - [ ] P5
