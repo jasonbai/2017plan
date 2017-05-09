@@ -1,0 +1,178 @@
+---
+title: "WineQualityReds"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### 1.数据说明
+
+1. Title: Wine Quality
+
+2. Sources
+> Created by: Paulo Cortez (Univ. Minho), Antonio Cerdeira, Fernando Almeida, Telmo Matos and Jose Reis (CVRVV) @ 2009
+
+3. Past Usage:
+
+  P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis.
+  Modeling wine preferences by data mining from physicochemical properties.
+  In Decision Support Systems, Elsevier, 47(4):547-553. ISSN: 0167-9236.
+
+  In the above reference, two datasets were created, using red and white wine samples.
+  The inputs include objective tests (e.g. PH values) and the output is based on sensory data
+  (median of at least 3 evaluations made by wine experts). Each expert graded the wine quality
+  between 0 (very bad) and 10 (very excellent). Several data mining methods were applied to model
+  these datasets under a regression approach. The support vector machine model achieved the
+  best results. Several metrics were computed: MAD, confusion matrix for a fixed error tolerance (T),
+  etc. Also, we plot the relative importances of the input variables (as measured by a sensitivity
+  analysis procedure).
+
+4. Relevant Information:
+
+   The two datasets are related to red and white variants of the Portuguese "Vinho Verde" wine.
+   For more details, consult: http://www.vinhoverde.pt/en/ or the reference [Cortez et al., 2009].
+   Due to privacy and logistic issues, only physicochemical (inputs) and sensory (the output) variables
+   are available (e.g. there is no data about grape types, wine brand, wine selling price, etc.).
+
+   These datasets can be viewed as classification or regression tasks.
+   The classes are ordered and not balanced (e.g. there are munch more normal wines than
+   excellent or poor ones). Outlier detection algorithms could be used to detect the few excellent
+   or poor wines. Also, we are not sure if all input variables are relevant. So
+   it could be interesting to test feature selection methods.
+
+5. Number of Instances: red wine - 1599; white wine - 4898.
+
+6. Number of Attributes: 11 + output attribute
+
+   Note: several of the attributes may be correlated, thus it makes sense to apply some sort of
+   feature selection.
+
+7. Attribute information:
+
+   For more information, read [Cortez et al., 2009].
+
+   Input variables (based on physicochemical tests):
+   1 - fixed acidity (tartaric acid - g / dm^3)
+   2 - volatile acidity (acetic acid - g / dm^3)
+   3 - citric acid (g / dm^3)
+   4 - residual sugar (g / dm^3)
+   5 - chlorides (sodium chloride - g / dm^3
+   6 - free sulfur dioxide (mg / dm^3)
+   7 - total sulfur dioxide (mg / dm^3)
+   8 - density (g / cm^3)
+   9 - pH
+   10 - sulphates (potassium sulphate - g / dm3)
+   11 - alcohol (% by volume)
+   Output variable (based on sensory data):
+   12 - quality (score between 0 and 10)
+
+8. Missing Attribute Values: None
+
+9. Description of attributes:
+
+> 1. fixed acidity: most acids involved with wine or fixed or nonvolatile (do not evaporate readily)
+> 2. volatile acidity: the amount of acetic acid in wine, which at too high of levels can lead to an unpleasant, vinegar taste
+> 3. citric acid: found in small quantities, citric acid can add 'freshness' and flavor to wines
+   4. residual sugar: the amount of sugar remaining after fermentation stops, it's rare to find wines with less than 1 gram/liter and wines with greater than 45 grams/liter are considered sweet
+   5. chlorides: the amount of salt in the wine
+   6. free sulfur dioxide: the free form of SO2 exists in equilibrium between molecular SO2 (as a dissolved gas) and bisulfite ion; it prevents microbial growth and the oxidation of wine
+   7. total sulfur dioxide: amount of free and bound forms of S02; in low concentrations, SO2 is mostly undetectable in wine, but at free SO2 concentrations over 50 ppm, SO2 becomes evident in the nose and taste of wine
+   8. density: the density of water is close to that of water depending on the percent alcohol and sugar content
+   9. pH: describes how acidic or basic a wine is on a scale from 0 (very acidic) to 14 (very basic); most wines are between 3-4 on the pH scale
+   10. sulphates: a wine additive which can contribute to sulfur dioxide gas (S02) levels, wich acts as an antimicrobial and antioxidant
+   11. alcohol: the percent alcohol content of the wine
+   Output variable (based on sensory data):
+   12. quality (score between 0 and 10)
+
+#### 2.Input DATA
+
+```{r}
+library(readr)
+df <- read_csv("~/Desktop/P4/wineQualityReds.csv")
+```
+
+#### 3.DATA View
+```{r}
+head(df)
+nrow(df)
+ncol(df)
+names(df)
+summary(df)
+```
+
+##### 3.1 Observe the missing values
+
+```{r}
+library("VIM")
+matrixplot(df)
+df=na.omit(df)
+```
+缺失值只有两个，做删除处理
+
+
+#### 4.初步观察数据 
+```{r}
+library(ggplot2)
+ggplot(df,aes(df$quality))+geom_histogram()
+ggplot(df,aes(df$quality,df$alcohol))+geom_point()
+```
+多数评分在5，6分之间
+
+#### 5.相关性检查，共性因子检测
+```{r}
+require(corrplot)
+#correlation analysis
+cor1<-cor(df)
+corrplot(cor1,tl.cex = 0.5)
+```
+
+##### 5.1进一步分析
+
+```{r}
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+usr <- par("usr"); on.exit(par(usr))
+par(usr = c(0, 1, 0, 1))
+r <- abs(cor(x, y))
+txt <- format(c(r, 0.123456789), digits = digits)[1]
+txt <- paste0(prefix, txt)
+if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+text(0.5, 0.5, txt, cex = cex.cor * r)
+}
+panel.hist <- function(x, ...)
+{
+usr <- par("usr"); on.exit(par(usr))
+par(usr = c(usr[1:2], 0, 1.5) )
+h <- hist(x, plot = FALSE)
+breaks <- h$breaks; nB <- length(breaks)
+y <- h$counts; y <- y/max(y)
+rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
+}
+pairs(df, 
+lower.panel=panel.cor,
+upper.panel=panel.smooth,
+diag.panel=panel.hist,
+main = 'The Scatterplot Matrix of The WineQualityReds',
+pch = 21,
+bg = "orange",
+line.main=1.5,
+oma=c(2,2,3,2)
+)
+```
+
+得出ph和fixed.acidity负相关性较高，density与fixed.acidity正相关性较高，在多元线性回归分析中除去fixed.acidity进行分析
+
+
+#### 6.多元线性回归
+
+```{r}
+lm1<-lm(df$quality~df$volatile.acidity+df$citric.acid+df$residual.sugar+df$chlorides+df$free.sulfur.dioxide+df$total.sulfur.dioxide+df$density+df$pH+df$sulphates+df$alcohol,data=df)
+lm1
+summary(lm1)
+```
+影响一瓶红酒的品质的主要因素有：volatile.acidity ，chlorides ，free.sulfur.dioxide，total.sulfur.dioxide，pH ，sulphates ，alcohol。
+
+
+#### 总结：影响一瓶红酒的品质的主要有volatile.acidity ，chlorides ，free.sulfur.dioxide，total.sulfur.dioxide，pH ，sulphates ，alcohol这些因素，但是由于本数据样本较小，且多数集中5，6级的评级，且分布较为平均，不是能很好的分析出影响一瓶好红酒有哪些因素。
