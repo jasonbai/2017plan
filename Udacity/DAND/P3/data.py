@@ -232,9 +232,8 @@ def load_new_tag(element, secondary, default_tag_type):
         post_code = secondary.attrib['v'].strip()
         m = POSTCODE.match(post_code)
         if m is not None:
-            # Add space in middle if there is none
             if " " not in post_code:
-                post_code = post_code[:5] + " " + post_code[5:]
+                post_code = post_code[:5]
             # Convert to upper case
             new['value'] = post_code.upper()
         else:
