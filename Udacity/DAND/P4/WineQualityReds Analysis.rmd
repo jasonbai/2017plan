@@ -1,0 +1,233 @@
+<style>
+a {color: #38C5FF;}
+h3 {color: #FF6A02;}
+h4 {color: #FF6A62;}
+</style>
+
+WineQualityReds Analysis by Jasonbai
+========================================================
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
+
+rm(list = ls())
+library(readr)
+library(ggplot2)
+```
+
+```{r echo=FALSE, Load_the_Data}
+# Load the Data
+df <- read_csv("~/Desktop/P4/wineQualityReds.csv")
+```
+
+### 1.structure of dataset 数据说明
+Title: Wine Quality ,This dataset is public available for research. 
+
+> P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis.
+  Modeling wine preferences by data mining from physicochemical properties.
+  In Decision Support Systems, Elsevier, 47(4):547-553. ISSN: 0167-9236.
+
+> Available at: [@Elsevier] http://dx.doi.org/10.1016/j.dss.2009.05.016
+                [Pre-press (pdf)] http://www3.dsi.uminho.pt/pcortez/winequality09.pdf
+                [bib] http://www3.dsi.uminho.pt/pcortez/dss09.bib
+
+   Created by: Paulo Cortez (Univ. Minho), Antonio Cerdeira, Fernando Almeida, Telmo Matos and Jose Reis (CVRVV) @ 2009
+
+变量统计：共计12个变量
+```{r}
+dim(df)
+ls(df)
+```
+#### 1.1 Attribute information: 变量值
+>  1. fixed acidity (tartaric acid - g / dm^3)
+   2. volatile acidity (acetic acid - g / dm^3)
+   3. citric acid (g / dm^3)
+   4. residual sugar (g / dm^3)
+   5. chlorides (sodium chloride - g / dm^3
+   6. free sulfur dioxide (mg / dm^3)
+   7. total sulfur dioxide (mg / dm^3)
+   8. density (g / cm^3)
+   9. pH
+   10. sulphates (potassium sulphate - g / dm3)
+   11. alcohol (% by volume)
+   Output variable (based on sensory data):
+   12. quality (score between 0 and 10)
+   
+   
+#### 1.2 Description of attributes:变量描述
+
+其中体现红酒的酸、甜、咸、苦的成分归纳如下：  
+酸：Fixed acidity（酒石酸）、Volatile acidity（醋酸） 、  Citric acid（柠檬酸）   甜：Residual sugar（糖分） 、alcohol（酒精） 
+咸：chlorides（氯化钠）  
+苦：Free sulfur dioxide（游离二氧化硫）、Total sulfur dioxide（总二氧化硫）、sulphates（硫酸钾）   
+
+#### 1.3 变量反思
+显示的变量只是红酒主要的基本成分，并没有微量成分，由葡萄酒的品尝原理我们知道，葡萄酒中的微量成分是香气和滋味成分中最主要的部分，这些成分数目极大而浓度极小。这可能对我们的分析会造成不利的影响，即体现红酒质量的自变量缺失了，某些甚至可能是重要的变量。
+
+#### 1.4   基础数据处理， 缺失值观察
+```{r}
+library("VIM")
+matrixplot(df)
+df=na.omit(df)
+```
+本次的数据比较规整，无需做大量的数据清洗，缺失值只有两个，做删除处理
+
+
+### 2. 这个项目主要是根据葡萄酒的各种参数，通过数据分析，发现真正影响一瓶好的葡萄酒有哪些因素。
+#### 2.1 可以看出，这批数据（葡萄酒）的品质主要集中在5分，6分。最差3分，最好的8分。
+```{r}
+ggplot(df,aes(df$quality))+geom_histogram()
+summary(df$quality)
+  
+```
+
+#### 2.2 VIF（方差膨胀因子）来检验多重共线性问题。如果存在多重共线性，即有可能存在两个变量高度相关，需要降维或剔除处理。
+```{r}
+require(corrplot)
+#correlation analysis
+cor1<-cor(df)
+corrplot(cor1,tl.cex = 0.6)
+corrplot(cor1,tl.cex = 0.6, method = "number",cl.pos="n")
+```
+
+上图可以得出自变量间的相关性大小，接着挑选相关性较强的变量进行进一步的观察分析。
+
+
+#### 2.3 自变量间的相关性分析
+```{r}
+
+ggplot(df,aes(factor(df$fixed.acidity), df$citric.acid))  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red")
+
+
+ggplot(df,aes(factor(df$fixed.acidity), df$density))  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red")
+
+ggplot(df,aes(factor(df$fixed.acidity), df$pH))  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red")
+
+ggplot(df,aes(factor(df$volatile.acidity), df$citric.acid))  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red")
+
+ggplot(df,aes(factor(df$citric.acid), df$pH))  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red")
+
+ggplot(df,aes(factor(df$free.sulfur.dioxide), df$total.sulfur.dioxide))  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red")
+
+ggplot(df,aes(factor(df$free.sulfur.dioxide), df$total.sulfur.dioxide))  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red")
+
+ggplot(df,aes(factor(df$density), df$alcohol))  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red")
+```
+
+#### 2.4 进一步分析
+
+```{r}
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+usr <- par("usr"); on.exit(par(usr))
+par(usr = c(0, 1, 0, 1))
+r <- abs(cor(x, y))
+txt <- format(c(r, 0.123456789), digits = digits)[1]
+txt <- paste0(prefix, txt)
+if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+text(0.5, 0.5, txt, cex = cex.cor * r)
+}
+panel.hist <- function(x, ...)
+{
+usr <- par("usr"); on.exit(par(usr))
+par(usr = c(usr[1:2], 0, 1.5) )
+h <- hist(x, plot = FALSE)
+breaks <- h$breaks; nB <- length(breaks)
+y <- h$counts; y <- y/max(y)
+rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
+}
+pairs(df, 
+lower.panel=panel.cor,
+upper.panel=panel.smooth,
+diag.panel=panel.hist,
+main = 'The Scatterplot Matrix of The WineQualityReds',
+pch = 21,
+bg = "orange",
+line.main=1.5,
+oma=c(2,2,3,2)
+)
+```
+
+可以得出：
+除了Fixed acidity与density，Fixed acidity与Citric  acid、Fixed acidity与PH、Free sulfur dioxide与otal sulfur dioxide的相关系数在0.68左右，其他变量之间的相关程度并不高。其中，Fixed acidity 与PH、Volatile acidity与Fixed acidity、alcohol与density之间存在负相关性。 综上也说明了，在葡萄酒的成分里，Fixed acidity和许多化学成分存在相关性。 
+
+### 3.模型建立
+#### 3.1 建立训练集与验证集
+挑选线性关系较强的变量入模，反复调整后，确定入模变量表现最强。
+```{r}
+library(memisc)
+m1 <- lm(df$quality ~ df$volatile.acidity,data=df)
+m2 <- update(m1,~.+ df$chlorides)
+m3 <- update(m2,~.+ df$total.sulfur.dioxide)
+m4 <- update(m3,~.+ df$pH)
+m5 <- update(m4,~.+ df$sulphates)
+m6 <- update(m5,~.+ df$alcohol)
+mtable(m1,m2,m3,m4,m5,m6)
+
+```
+
+#### 3.2 模型诊断
+```{r}
+plot(m6)
+```
+
+> 
+* 1图 散点规律不是特别明显，线性关系一般。
+* 2图 散点大致都集中在QQ图中的直线上，说明残差正态性良好。
+* 3图 点在曲线周围随机分布，残差方差基本不变
+* 4图 残差间相关独立检测。
+
+### 4.模型验证
+
+#### 4.1 通过成分残差图即偏残差图，判断因变量与自变量之间是否呈非线性关系
+从生成的图像来说，因变量和各个自变量的线性关系相对明显，模型效果相对成功。
+```{r}
+library(car)
+crPlots(m6)
+```
+
+### 5.反思
+    前面也提过本数据集，变量只是红酒主要的基本成分，并没有微量成分，由葡萄酒的品尝原理我们知道，葡萄酒中的微量成分是香气和滋味成分中最主要的部分，这些成分数目极大而浓度极小。这可能对我们的分析会造成不利的影响，即体现红酒质量的自变量缺失了，某些甚至可能是重要的变量。
+    而且在数据量上，由于本数据样本较小，且红酒品质多数集中5，6级的评级，且分布较为平均，不是能很好的分析出影响一瓶好红酒有哪些因素。
+    其次建模方法上，我先观察了变量之间的线性关系，挑选了线性关系较强的变量，从多元线性建立模型，反复调整后，最终选择了表现最强的变量入模。
+    经过模型验证，说明模型效果。
+    但是模型效果的好坏的决定因素是变量，变量的有效性，数据量都先天决定了模型的效果，和将来的实际应用。今后应该进一步去收集很多的变量及数据量，将对模型的建立有良好的促进效果。
+
+ 
+
+
+
+
+
