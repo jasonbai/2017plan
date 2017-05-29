@@ -97,3 +97,4 @@
 - 2017年1月6日 建立了本项目的[wiki页面](https://github.com/jasonbai/2017plan/wiki)
 - 2017年1月15日  [个人站点](http://jasonbai.me) 上线，http://jasonbai.me
 - 2017年2月7日  [完结《计算机科学导论》](http://www.jasonbai.com/2017/02/07/intro-to-computer-science--note)
+- 2017年5月29日  入手 Dell Precision 3250 
