@@ -28,7 +28,8 @@ library("VIM")
 
 ```{r echo=FALSE, Load_the_Data}
 # Load the Data
-df <- read_csv("~/Desktop/P4/wineQualityReds.csv")
+# df <- read_csv("~/Desktop/P4/wineQualityReds.csv")
+df <- read_csv("D:/GitHub/2017plan/Udacity/DAND/P4/wineQualityReds.csv")
 summary(df)
 ```
 
@@ -84,19 +85,148 @@ df=na.omit(df)
 本次的数据比较规整，无需做大量的数据清洗，缺失值只有两个，做删除处理
 
 
-### 2. 这个项目主要是根据葡萄酒的各种参数，通过数据分析，发现真正影响一瓶好的葡萄酒有哪些因素。
-#### 2.1 可以看出，这批数据（葡萄酒）的品质主要集中在5分，6分。最差3分，最好的8分。
+### 2.Leading Questions
+
+**1.**影响高品质葡萄酒的有效因素有哪些？
+**2.**是什么原因导致葡萄酒的质量不合格?   
+**3.**是否可以依据化学成分预测葡萄酒的质量？
+
+### 3. 单因素分析 
+
+#### 3.1 Quality
 ```{r}
 ggplot(df,aes(df$quality))+geom_histogram()
 summary(df$quality)
   
 ```
+这批数据中，变量质量几乎是正态分布。最好的评分实际上是8，但是在直方图中占比特别少，3的评级也相当罕见。如果想要比较这些不同的群体，这些群体的规模太小可能是个问题。
+
+```{r}
+x <- subset(df, select = -c(quality))
+aggregate(x,list(df$quality),median)
+```
+
+从上图观察，还是很难区对红酒品质的好坏，有较好的区分度观察，所以我计划新建一个变量，用于归类区分品质好坏。
+
+```{r}
+#构造等级变量
+df$rating<-ifelse(df$quality<5,"bad",
+                    ifelse(df$quality==5,"medium-low",
+                           ifelse(df$quality==6,"medium",                                  ifelse(df$quality==7,"medium-high","good"))))    
+
+df$rating<-factor(df$rating,levels=c(
+  "bad","medium-low","medium","medium-high","good"
+  ),ordered=T)
+
+#观察新变量
+table(df$rating) 
+qplot(data=df,x=rating)
+x <- subset(df, select = -c(quality,rating))
+aggregate(x,list(df$rating),median)
+```
+
+这样看起来就好多了，能明显区隔品质。
+
+#### 3.2 接着来观察酿酒制作中几个主要变量，alcohol，residual.sugar，density
+
+```{r}
+p1<-qplot(data=df,x=alcohol)
+p2<-qplot(data=df,x=residual.sugar)
+p3<-qplot(data=df,x=density)
+
+grid.arrange(p1,p2,p3)
+```
+
+alcohol（酒精）的百分比从8到14，与高乙醇含量杀死酵母的背景知识一致，因此不能超过15%。
+density（密度）大多数葡萄酒的密度低于水，因为乙醇比水密度更小。
+residual.sugar （甜度）多数集中在2左右，从直方图无法得出更多的结论，因为整体数据较为集中。
+
+```{r}
+p1<-qplot(data=df,x=fixed.acidity)
+p2<-qplot(data=df,x=volatile.acidity)
+p3<-qplot(data=df,x=citric.acid)
+p4<-qplot(data=df,x=pH)
+grid.arrange(p1,p2,p3,p4,ncol=2)
+```
+
+PH值，fixed.acidity，volatile.acidity三个值，符合正态分布。citric.acid为非正态分布，大多数小于0.75
+
+```{r}
+p1<-qplot(data=df,x=free.sulfur.dioxide,binwidth=4)
+p2<-qplot(data=df,x=total.sulfur.dioxide,binwidth=5)
+p3<-qplot(data=df,x=sulphates,binwidth=0.01)
+grid.arrange(p1,p2,p3)
+```
+
+sulphates（硫酸钾）符合正态分布，free.sulfur.dioxide与total.sulfur.dioxide非正态分布，free.sulfur.dioxide不超过40，total.sulfur.dioxide主要在100以内。
+
+
+```{r}
+p1<-qplot(data=df,x=chlorides,binwidth=0.001)
+
+p2<-qplot(data=df,x=log10(chlorides),binwidth=0.01)
+grid.arrange(p1,p2)
+```
+
+chlorides主要为集中在0.1，呈现正态分布。
+
+### 4.Univariate Analysis
+
+**What is the structure of your dataset?**  
+1597个观察，12个变量，quality为因变量，其他为自变量，且都为数值型。
+>  
+其中体现红酒的酸、甜、咸、苦的成分归纳如下：  
+* 酸：Fixed acidity（酒石酸）、Volatile acidity（醋酸） 、  Citric acid（柠檬酸）   
+* 甜：Residual sugar（糖分） 、alcohol（酒精） 
+* 咸：chlorides（氯化钠）  
+* 苦：Free sulfur dioxide（游离二氧化硫）、Total sulfur dioxide（总二氧化硫）、sulphates（硫酸钾）   
+
+**What is/are the main feature(s) of interest in your dataset?**  
+
+在酿酒过程中，我主要感兴趣Residual sugar 和 alcohol
+
+**What other features in the dataset do you think will help support your investigation into your feature(s) of interest?**  
+volatile.acidity and free.sulfur.dioxide 是影响酒的重要因素。
+除此之外还有fixed acidity,citric acidity也会影响口感;  
+pH和density并不是很感兴趣。  
+
+**Did you create any new variables from existing variables in the dataset?**  
+是的，我生成了一个新的变量来排除异常值及数据过于分散的影响。
+
+**Of the features you investigated, were there any unusual distributions? Did you perform any operations on the data to tidy, adjust, or change the form of the data? If so, why did you do this?**  
+除了alchohol,pH and quality(rating) 是正态分布的,其他的都为长尾分布。 
+
+### 5.Bivariate Plots Section
+
+#### 5.1 Big Picture  
+
+```{r pairwise_corelation}
+#compute the corelations between 12 variables 
+require(corrplot)
+mat<-as.matrix(subset(df,select=c(1:12)))
+cor_mat<-cor(mat)
+cor_mat
+corrplot(cor_mat,tl.cex = 0.6)
+
+#To look at it closely I display only correlation I am interested
+#cor_mat<-ifelse((cor_mat<(-0.3) | cor_mat>0.3) & cor_mat!=1,cor_mat,NA)
+#cor_mat
+
+rm(mat,cor_mat)
+```
+
+
+
+
 
 #### 2.2 VIF（方差膨胀因子）来检验多重共线性问题。如果存在多重共线性，即有可能存在两个变量高度相关，需要降维或剔除处理。
+
+ 
 ```{r}
 require(corrplot)
 #correlation analysis
-cor1<-cor(df)
+mat<-as.matrix(subset(df,select=c(1:12)))
+cor1<-cor(mat)
 corrplot(cor1,tl.cex = 0.6)
 corrplot(cor1,tl.cex = 0.6, method = "number",cl.pos="n")
 ```
