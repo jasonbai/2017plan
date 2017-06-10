@@ -142,10 +142,10 @@ density（密度）大多数葡萄酒的密度低于水，因为乙醇比水密�
 residual.sugar （甜度）多数集中在2左右，从直方图无法得出更多的结论，因为整体数据较为集中。
 
 ```{r}
-p1<-qplot(data=df,x=fixed.acidity)
-p2<-qplot(data=df,x=volatile.acidity)
-p3<-qplot(data=df,x=citric.acid)
-p4<-qplot(data=df,x=pH)
+p1<-qplot(data=df,x=df$fixed.acidity)
+p2<-qplot(data=df,x=df$volatile.acidity)
+p3<-qplot(data=df,x=df$citric.acid)
+p4<-qplot(data=df,x=df$pH)
 grid.arrange(p1,p2,p3,p4,ncol=2)
 ```
 
@@ -198,7 +198,7 @@ pH和density并不是很感兴趣。
 
 ### 5.Bivariate Plots Section
 
-#### 5.1 Big Picture  
+#### 5.1 变量间相关性观察
 
 ```{r pairwise_corelation}
 #compute the corelations between 12 variables 
@@ -215,23 +215,200 @@ corrplot(cor_mat,tl.cex = 0.6)
 rm(mat,cor_mat)
 ```
 
+可以看到Fixed acidity与density，Citric acid、PH 的相关系数在0.68左右。
+Free sulfur dioxide与total.sulfur.dioxide，的相关系数在0.68左右。
 
+其他变量之间的相关程度并不高。其中，Fixed acidity 与PH、Volatile acidity与Fixed acidity、alcohol与density之间存在负相关性。 综上也说明了，在葡萄酒的成分里，Fixed acidity和许多化学成分存在相关性。 
 
-
-
-#### 2.2 VIF（方差膨胀因子）来检验多重共线性问题。如果存在多重共线性，即有可能存在两个变量高度相关，需要降维或剔除处理。
-
- 
-```{r}
-require(corrplot)
-#correlation analysis
-mat<-as.matrix(subset(df,select=c(1:12)))
-cor1<-cor(mat)
-corrplot(cor1,tl.cex = 0.6)
-corrplot(cor1,tl.cex = 0.6, method = "number",cl.pos="n")
+```{r pairwise_plot,fig.width=12,fig.height=8}
+ggpairs(df)
 ```
 
-上图可以得出自变量间的相关性大小，接着挑选相关性较强的变量进行进一步的观察分析。
+从这幅图可以更加清晰的了解到变量之间的相关性特点，本来预期酒精alcohol对酒的影响很大，但实际从图表看，并没有特别的影响。
+
+#### 5.2 Alcohol and Volatile.acidity 
+```{r quality_alcohol}
+
+ggplot(aes(x=quality,y=alcohol),data=df)+
+  geom_jitter(alpha=1/5,color="Darkblue")+
+  geom_quantile(stat="quantile",quantiles=c(0.25,0.5,0.75),color="red")
+```
+
+```{r rating_alcohol}
+ggplot(aes(x=rating,y=alcohol,fill=rating),data=df)+
+  geom_boxplot()
+
+by(df$alcohol,df$rating,summary)
+```
+
+
+可以看到，酒精度和品质，在从bad到medium-low有下降，但是从medium-low开始，alcohol和rating有了明显的趋势。
+
+
+```{r quality/rating_volatile.acidity}
+p1<-ggplot(aes(x=quality,y=volatile.acidity),data=df)+
+  geom_jitter(alpha=1/5)+
+  geom_line(data=df,stat="summary",
+            fun.y=quantile,fun.args=list(probs=0.25),
+            aes(group=1),size=1,linetype=2,color="red")+
+  geom_line(data=df,stat="summary",
+            fun.y=quantile,fun.args=list(probs=0.5),
+            aes(group=1),size=1,color="red")+
+  geom_line(data=df,stat="summary",
+            fun.y=quantile,fun.args=list(probs=0.75),
+            aes(group=1),size=1,linetype=2,color="red")
+
+p2<-ggplot(aes(x=rating,y=volatile.acidity,fill=rating),data=df)+
+  geom_boxplot()+
+  scale_fill_brewer(palette="Reds")+ 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+grid.arrange(p1,p2,ncol=2)
+
+by(df$volatile.acidity,df$rating,summary)
+```
+
+可以看到随着quality的提升， volatile acidity也随之下降，但是在medium-high和good区间，volatile acidity变化变缓，随之接近。
+
+
+#### 5.3 Chlorides and Quality 
+
+```{r quality/rating_chlorides}
+
+p1<-ggplot(aes(x=quality,y=chlorides),data=df)+
+  geom_jitter(alpha=1/5)+
+  geom_line(data=df,stat="summary",
+            fun.y=quantile,fun.args=list(probs=0.25),
+            aes(group=1),size=1,linetype=2,color="red")+
+  geom_line(data=df,stat="summary",
+            fun.y=quantile,fun.args=list(probs=0.5), 
+            aes(group=1),size=1,color="red")+
+  geom_line(data=df,stat="summary",
+            fun.y=quantile,fun.args=list(probs=0.75),
+            aes(group=1),size=1,linetype=2,color="red")
+
+p2<-ggplot(aes(x=rating,y=chlorides,fill=rating),data=df)+
+  geom_boxplot()+
+  scale_fill_brewer(palette="Purples")+ 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+grid.arrange(p1,p2,ncol=2)
+
+by(df$chlorides,df$rating,summary)
+```
+ Chlorides和rating看起来只有微乎其微的关系，随着chlorides增加，红酒的品质有微弱下降趋势。
+ 
+
+##### 5.4  其他因素与Quality的关系
+```{r quality_others}
+p1<-ggplot(aes(x=quality,y=fixed.acidity),data=df)+
+  geom_jitter(alpha=1/5)+
+  geom_line(data=df,stat="summary",
+            fun.y=quantile,fun.args=list(probs=0.5),
+            aes(group=1),size=1,color="red")
+
+p2<-ggplot(aes(x=quality,y=citric.acid),data=df)+
+  geom_jitter(alpha=1/5)+
+  geom_line(data=df,stat="summary",
+            fun.y=quantile,fun.args=list(probs=0.5),
+            aes(group=1),size=1,color="red")
+
+p3<-ggplot(aes(x=quality,y=residual.sugar),data=df)+
+  geom_jitter(alpha=1/5)+
+  geom_line(data=df,stat="summary",
+            fun.y=quantile,fun.args=list(probs=0.5),
+            aes(group=1),size=1,color="red")
+
+p4<-ggplot(aes(x=quality,y=free.sulfur.dioxide),data=df)+
+  geom_jitter(alpha=1/5)+
+  geom_line(data=df,stat="summary",
+            fun.y=quantile,fun.args=list(probs=0.5),
+            aes(group=1),size=1,color="red")
+
+p5<-ggplot(aes(x=quality,y=total.sulfur.dioxide),data=df)+
+  geom_jitter(alpha=1/5)+
+  geom_line(data=df,stat="summary",
+            fun.y=quantile,fun.args=list(probs=0.5),
+            aes(group=1),size=1,color="red")
+
+p6<-ggplot(aes(x=quality,y=sulphates),data=df)+
+  geom_jitter(alpha=1/5)+
+  geom_line(data=df,stat="summary",
+            fun.y=quantile,fun.args=list(probs=0.5),
+            aes(group=1),size=1,color="red")
+
+
+grid.arrange(p1,p2,p3,p4,p5,p6,ncol=3)
+```
+
+As we can see from plots, there is no observable correlation from scatter plot aginst quality any more. Quality is almost homogenously distributed and symetric along y axis.  
+
+从这张集合图可以看到，大多数变量和quality没有特别明显的趋势。citric.acid和quality
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+ggplot(aes(x=quality,y=citric.acid),data=df)+
+  geom_jitter(alpha=1/5)+
+  geom_line(data=df,stat="summary",
+            fun.y=quantile,fun.args=list(probs=0.5))
+
+cor.test(df$quality,df$citric.acid)
+```
+
+
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #### 2.3 自变量间的相关性分析
