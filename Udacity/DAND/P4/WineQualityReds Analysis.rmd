@@ -343,7 +343,67 @@ grid.arrange(p1,p2,p3,p4,p5,p6,ncol=3)
 
 As we can see from plots, there is no observable correlation from scatter plot aginst quality any more. Quality is almost homogenously distributed and symetric along y axis.  
 
-从这张集合图可以看到，大多数变量和quality没有特别明显的趋势。citric.acid和quality
+从这张集合图可以看到，大多数变量和quality没有特别明显的趋势。
+
+
+### 5.5 Density corelated  
+
+```{r residual.sugar_density}
+ggplot(aes(x=residual.sugar,y=density),data=df)+
+  geom_point(alpha=1/5)+
+  geom_smooth(method="lm",color="red")
+
+```
+
+```{r alchol_density}
+ggplot(aes(x=alcohol,y=density),data=df)+
+  scale_x_continuous(breaks=seq(8,15,1))+
+  geom_point(alpha=1/5)+
+  geom_smooth(method="lm",color="red")
+
+```
+
+除了quality外，我们还对density特别感兴趣，从了解的红酒知识，density与很多要素有相关性，从上图可以看到density与residual sugar有一定线性相关性。Alcohol与density也有明显的线性相关性。
+
+除了以上两个变量， fixed.acidity,citric.acid, 和chlorides 与 density 的相关性分别为0.66,0.36,0.20 ，还有total.sulfur.dioxide，free.sulfur.dioxide两个变量，作图观察。
+
+
+```{r}
+p1<-ggplot(aes(x=total.sulfur.dioxide,y=density),data=df)+
+  geom_point(alpha=1/5)+
+  xlim(0,300)+
+  ylim(0.98,1.01)+
+  geom_smooth(method="lm",color="red")
+
+p2<-ggplot(aes(x=free.sulfur.dioxide,y=density),data=df)+
+  geom_point(alpha=1/5)+
+  xlim(0,150)+
+  ylim(0.98,1.01)+
+  geom_smooth(method="lm",color="red")
+
+grid.arrange(p1,p2)
+```
+
+可以看到两者没有太多相关性。
+
+```{r total.sulfur.dioxide_free.sulfur.dioxide}
+
+ggplot(aes(x=total.sulfur.dioxide,y=free.sulfur.dioxide),data=df)+
+  geom_point(alpha=1/10)+
+  geom_smooth(method="lm",color="red")
+```
+
+As free SO^2^ increases, total SO^2^ increases and scattered broadly. The whole distribution displays a fan shape.     
+But even total SO^2^ is at most 300 mg/dm^3^. How can it impact so much on density?   
+To solve the puzzle we need to link this piece of infomation with others. Here are some other suprising findings. 
+
+
+
+
+
+
+
+
 
 
 
