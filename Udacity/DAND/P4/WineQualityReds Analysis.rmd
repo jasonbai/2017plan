@@ -346,7 +346,7 @@ As we can see from plots, there is no observable correlation from scatter plot a
 从这张集合图可以看到，大多数变量和quality没有特别明显的趋势。
 
 
-### 5.5 Density corelated  
+#### 5.5 Density  
 
 ```{r residual.sugar_density}
 ggplot(aes(x=residual.sugar,y=density),data=df)+
@@ -384,182 +384,61 @@ p2<-ggplot(aes(x=free.sulfur.dioxide,y=density),data=df)+
 grid.arrange(p1,p2)
 ```
 
-可以看到两者没有太多相关性。
+可以看到这两个因素，对于density来说没有太多相关性。
 
-```{r total.sulfur.dioxide_free.sulfur.dioxide}
+#### 5.6 其他因素之间
 
-ggplot(aes(x=total.sulfur.dioxide,y=free.sulfur.dioxide),data=df)+
-  geom_point(alpha=1/10)+
+```{r alcohol/sugar_SO2}
+p1<-ggplot(aes(x=total.sulfur.dioxide,y=alcohol),data=df)+
+  geom_point(alpha=1/5)+
   geom_smooth(method="lm",color="red")
+p2<-ggplot(aes(x=total.sulfur.dioxide,y=residual.sugar),data=df)+
+  geom_point(alpha=1/5)+
+  geom_smooth(method="lm",color="red")
+
+p3<-ggplot(aes(x=free.sulfur.dioxide,y=alcohol),data=df)+
+  geom_point(alpha=1/5)+
+  geom_smooth(method="lm",color="red")
+p4<-ggplot(aes(x=free.sulfur.dioxide,y=residual.sugar),data=df)+
+  geom_point(alpha=1/5)+
+  geom_smooth(method="lm",color="red")
+
+grid.arrange(p1,p2,p3,p4,ncol=2)
 ```
 
-As free SO^2^ increases, total SO^2^ increases and scattered broadly. The whole distribution displays a fan shape.     
-But even total SO^2^ is at most 300 mg/dm^3^. How can it impact so much on density?   
-To solve the puzzle we need to link this piece of infomation with others. Here are some other suprising findings. 
+free.sulfur.dioxide 和 total.sulfur.dioxide 与alcohol明显为负相关。
+而相反与residual.sugar是正相关。
 
+```{r alcohol/sugar_salts}
+p1<-ggplot(aes(x=chlorides,y=alcohol),data=df)+
+  geom_point(alpha=1/5)+
+  geom_smooth(method="lm",color="red")
+p2<-ggplot(aes(x=chlorides,y=residual.sugar),data=df)+
+  geom_point(alpha=1/5)+
+  geom_smooth(method="lm",color="red")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-```{r}
-ggplot(aes(x=quality,y=citric.acid),data=df)+
-  geom_jitter(alpha=1/5)+
-  geom_line(data=df,stat="summary",
-            fun.y=quantile,fun.args=list(probs=0.5))
-
-cor.test(df$quality,df$citric.acid)
+grid.arrange(p1,p2,ncol=2)
 ```
 
+Chlorides与alcohol为负相关，但是与residual.sugar是正向影响的。
 
-2
+### 6.Bivariate Analysis
 
+**Talk about some of the relationships you observed in this part of the investigation. How did the feature(s) of interest vary with other features in the dataset?**
 
+在上面的图形分析上，可以看到，重点观察了quality与其他变量的关系，alochol是众多变量中对quality相关性较高，其趋势明显，促进quality提升。除此之外，还有volatile.acidity是相反的，对quality是负相关。其他的变量看起来都表现较弱。
 
+**Did you observe any interesting relationships between the other features (not the main feature(s) of interest)?**
+Yes. I look at the unexpected relationships between alcohol/residual.sugar with chlorides and total.sulfur.dioxide, as well as SO^2^ and density. I suspect that  sulfur dioxide may affect the wine fermentation by involving in the microorganisms life span.It explains not only about the unexpected corelation here, it as well answers the strong correlation between SO^2^ and density despite their amount is too slight to have direct influence.   
+The direction as well as the slope ration of linear regression pair add more credibility to my hypothesis.     
 
+But personally I don't think chlorides affect the same way. Just common sense, small amount of chlorides are essential to microbeings. It makes no sense that harmless chlorides will depress sugar-alcohol conversion by killing yeast.Maybe it affect by other mechanim.  
 
-
-
-
-
-
-
-
-
-
-
-
-
+**What was the strongest relationship you found?**
+The strongest correlations are about density: the more residual sugar, the higher density; the less alcohol percentage, the higher density. 
+Besides total.sulfur.dioxide increases with more free.sulfur.dioxide (coefficient equals to 0.62).  Not suprising at all. Since total.sulfur.dioxide is sum of free.sulfur.dioxide and bound sulfur dioxide(compounds formed by SO^2^ with other chemicals). 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#### 2.3 自变量间的相关性分析
-```{r}
-
-ggplot(df,aes(factor(df$fixed.acidity), df$citric.acid))  +
-  geom_boxplot( alpha = .5,color = 'blue')+
-  stat_summary(fun.y = "mean", 
-               geom = "point", 
-               color = "red")
-
-
-ggplot(df,aes(factor(df$fixed.acidity), df$density))  +
-  geom_boxplot( alpha = .5,color = 'blue')+
-  stat_summary(fun.y = "mean", 
-               geom = "point", 
-               color = "red")
-
-ggplot(df,aes(factor(df$fixed.acidity), df$pH))  +
-  geom_boxplot( alpha = .5,color = 'blue')+
-  stat_summary(fun.y = "mean", 
-               geom = "point", 
-               color = "red")
-
-ggplot(df,aes(factor(df$volatile.acidity), df$citric.acid))  +
-  geom_boxplot( alpha = .5,color = 'blue')+
-  stat_summary(fun.y = "mean", 
-               geom = "point", 
-               color = "red")
-
-ggplot(df,aes(factor(df$citric.acid), df$pH))  +
-  geom_boxplot( alpha = .5,color = 'blue')+
-  stat_summary(fun.y = "mean", 
-               geom = "point", 
-               color = "red")
-
-ggplot(df,aes(factor(df$free.sulfur.dioxide), df$total.sulfur.dioxide))  +
-  geom_boxplot( alpha = .5,color = 'blue')+
-  stat_summary(fun.y = "mean", 
-               geom = "point", 
-               color = "red")
-
-ggplot(df,aes(factor(df$free.sulfur.dioxide), df$total.sulfur.dioxide))  +
-  geom_boxplot( alpha = .5,color = 'blue')+
-  stat_summary(fun.y = "mean", 
-               geom = "point", 
-               color = "red")
-
-ggplot(df,aes(factor(df$density), df$alcohol))  +
-  geom_boxplot( alpha = .5,color = 'blue')+
-  stat_summary(fun.y = "mean", 
-               geom = "point", 
-               color = "red")
-```
-
-#### 2.4 进一步分析
-
-```{r}
-panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
-{
-usr <- par("usr"); on.exit(par(usr))
-par(usr = c(0, 1, 0, 1))
-r <- abs(cor(x, y))
-txt <- format(c(r, 0.123456789), digits = digits)[1]
-txt <- paste0(prefix, txt)
-if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
-text(0.5, 0.5, txt, cex = cex.cor * r)
-}
-panel.hist <- function(x, ...)
-{
-usr <- par("usr"); on.exit(par(usr))
-par(usr = c(usr[1:2], 0, 1.5) )
-h <- hist(x, plot = FALSE)
-breaks <- h$breaks; nB <- length(breaks)
-y <- h$counts; y <- y/max(y)
-rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
-}
-pairs(df, 
-lower.panel=panel.cor,
-upper.panel=panel.smooth,
-diag.panel=panel.hist,
-main = 'The Scatterplot Matrix of The WineQualityReds',
-pch = 21,
-bg = "orange",
-line.main=1.5,
-oma=c(2,2,3,2)
-)
-```
-
-可以得出：
-除了Fixed acidity与density，Fixed acidity与Citric  acid、Fixed acidity与PH、Free sulfur dioxide与otal sulfur dioxide的相关系数在0.68左右，其他变量之间的相关程度并不高。其中，Fixed acidity 与PH、Volatile acidity与Fixed acidity、alcohol与density之间存在负相关性。 综上也说明了，在葡萄酒的成分里，Fixed acidity和许多化学成分存在相关性。 
 
 ### 3.模型建立
 #### 3.1 建立训练集与验证集
