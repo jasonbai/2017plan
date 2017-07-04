@@ -45,10 +45,10 @@
   - [x] P0 ____ *2017.2.15 finished*
   - [x] P1 ____ *2017.3.2 finished*
   - [x] P2 ____ *2017.4.9 finished*
-  - [ ] P3 ____ *2017.5.25 finished*
+  - [x] P3 ____ *2017.5.25 finished*
   - [ ] P4
   - [ ] P5
-  - [ ] P6____ *2017.6.25 finished*
+  - [x] P6____ *2017.6.25 finished*
   - [x] P7 ____ *2017.3.20 finished*
 ### 机器学习工程师
 - [ ] Udacity [统计学入门](https://cn.udacity.com/course/intro-to-statistics--st101) 48h
