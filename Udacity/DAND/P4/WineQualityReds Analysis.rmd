@@ -1,4 +1,4 @@
----
+ ---
 title: "WineQualityReds Analysis"
 author: "Jasonbai"
 date: "2017.5.31"
@@ -201,16 +201,14 @@ pH和density并不是很感兴趣。
 #### 5.1 变量间相关性观察
 
 ```{r pairwise_corelation}
-#compute the corelations between 12 variables 
+
 require(corrplot)
 mat<-as.matrix(subset(df,select=c(1:12)))
 cor_mat<-cor(mat)
 cor_mat
 corrplot(cor_mat,tl.cex = 0.6)
 
-#To look at it closely I display only correlation I am interested
-#cor_mat<-ifelse((cor_mat<(-0.3) | cor_mat>0.3) & cor_mat!=1,cor_mat,NA)
-#cor_mat
+
 
 rm(mat,cor_mat)
 ```
@@ -341,7 +339,6 @@ p6<-ggplot(aes(x=quality,y=sulphates),data=df)+
 grid.arrange(p1,p2,p3,p4,p5,p6,ncol=3)
 ```
 
-As we can see from plots, there is no observable correlation from scatter plot aginst quality any more. Quality is almost homogenously distributed and symetric along y axis.  
 
 从这张集合图可以看到，大多数变量和quality没有特别明显的趋势。
 
@@ -429,19 +426,144 @@ Chlorides与alcohol为负相关，但是与residual.sugar是正向影响的。
 在上面的图形分析上，可以看到，重点观察了quality与其他变量的关系，alochol是众多变量中对quality相关性较高，其趋势明显，促进quality提升。除此之外，还有volatile.acidity是相反的，对quality是负相关。其他的变量看起来都表现较弱。
 
 **Did you observe any interesting relationships between the other features (not the main feature(s) of interest)?**
-Yes. I look at the unexpected relationships between alcohol/residual.sugar with chlorides and total.sulfur.dioxide, as well as SO^2^ and density. I suspect that  sulfur dioxide may affect the wine fermentation by involving in the microorganisms life span.It explains not only about the unexpected corelation here, it as well answers the strong correlation between SO^2^ and density despite their amount is too slight to have direct influence.   
-The direction as well as the slope ration of linear regression pair add more credibility to my hypothesis.     
 
-But personally I don't think chlorides affect the same way. Just common sense, small amount of chlorides are essential to microbeings. It makes no sense that harmless chlorides will depress sugar-alcohol conversion by killing yeast.Maybe it affect by other mechanim.  
+是的，可以看到density与total.sulfur.dioxide与free.sulfur.dioxide几乎没有任何相关性。total.sulfur.dioxide与free.sulfur.dioxide这样的化学元素是不会对密度这样的物理属性形成明显的直接关系。
 
 **What was the strongest relationship you found?**
-The strongest correlations are about density: the more residual sugar, the higher density; the less alcohol percentage, the higher density. 
-Besides total.sulfur.dioxide increases with more free.sulfur.dioxide (coefficient equals to 0.62).  Not suprising at all. Since total.sulfur.dioxide is sum of free.sulfur.dioxide and bound sulfur dioxide(compounds formed by SO^2^ with other chemicals). 
+
+相关性最强的是density与residual_sugar，residual_sugar越多，density越大；还有alcohol，含量越少，density越大。
+
+
+### 7. Multivariate Plots Section  
+
+多变量分析，单纯从一个因子看观察并不清晰，再次创造额外的两个分类变量来进一步观察。
+我创造了关于酒精度的分类变量和PH值分类变量。
+
+#### 7.1achl.label and pH.label  
+
+```{r factor2/3_pH/alcohol}
+df$achl.label<-ifelse(df$alcohol<9.5,"-",
+                        ifelse(df$alcohol<10.4,"--",
+                               ifelse(df$alcohol<11.4,"---","----")))
+df$achl.label<-factor(df$achl.label)
+
+
+df$pH.label<-ifelse(df$pH<3.09,"++++",
+                       ifelse(df$pH<3.18,"+++",
+                              ifelse(df$pH<3.28,"++","+")))
+df$pH.label<-factor(df$pH.label)
+
+```
+
+```{r label_rating}
+p1<-ggplot(aes(x=rating,fill=achl.label),data=df)+
+  geom_bar(position="fill")+
+  scale_fill_brewer()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+p2<-ggplot(aes(x=rating,fill=pH.label),data=df)+
+  geom_bar(position="fill")+
+  scale_fill_brewer()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+grid.arrange(p1,p2,ncol=2)
+```
+
+可以明显看出，随着酒精含量越来越高，红酒等级越来越高。而PH值变化并不明显。
+
+#### 7.2 Alcohol, Volatile.acidity and Quality  
+
+```{r rating_alcohol_volatile.acidity}
+ggplot(aes(x=alcohol,y=volatile.acidity),data=df)+
+  geom_point(aes(color=rating))+
+  scale_color_brewer()+
+  geom_smooth(method="lm")
+
+```
+
+```{r rating_alcohol_volatile.acidity_facet_wrap}
+ggplot(aes(x=alcohol,y=volatile.acidity),data=df)+
+  geom_point(aes(color=rating))+
+  scale_color_brewer()+
+  facet_wrap(~achl.label,scales="free")
+```
+
+
+在x轴和y轴之间没有明显的关联。从颜色深度上观察，更好的红酒(深色圆点)明显在右下角，而更差的葡萄酒(较轻的点)则在左上方。这意味着随着酒精含量的增加和酸度的降低，葡萄酒的品质会更好。
+
+### 7.3 Chlorides,Total.sulfur.dioxide and Quality  
+
+```{r rating_alcohol_chlorides/total.sulfur.dioxide}
+p1<-ggplot(aes(x=alcohol,y=chlorides),data=df)+
+  geom_point(aes(color=rating))+
+  scale_color_brewer(palette="Greens")+
+  geom_smooth(method="lm")
+
+p2<-ggplot(aes(x=alcohol,y=total.sulfur.dioxide),data=df)+
+  geom_point(aes(color=rating))+
+  scale_color_brewer(palette="Reds")+
+  geom_smooth(method="lm")
+
+grid.arrange(p1,p2)
+```
+
+基于双变量分析(chlorides and total.sulfur.dioxide)同样地，在右下角的深色圆点看起来更多，可以表明更好的品质。
 
 
 
-### 3.模型建立
-#### 3.1 建立训练集与验证集
+
+### 7.4 Sulphates 硫酸盐
+
+```{r sulphates,fig.height=8,fig.width=12}
+p1<-ggplot(aes(x=free.sulfur.dioxide,
+               y=sulphates,color=pH.label),data=df)+
+  geom_point()+
+  xlim(0,100)+
+  scale_color_brewer(palette="Reds")+ 
+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+p2<-ggplot(aes(x=free.sulfur.dioxide,
+               y=sulphates,color=achl.label),data=df)+
+  geom_point()+
+  xlim(0,100)+
+  scale_color_brewer(palette="Blues")+ 
+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+p3<-ggplot(aes(x=free.sulfur.dioxide,
+               y=sulphates,color=rating),data=df)+
+  geom_point()+
+  xlim(0,100)+
+  scale_color_brewer(palette="Greens")+ 
+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+p4<-ggplot(aes(x=total.sulfur.dioxide,
+               y=sulphates,color=pH.label),data=df)+
+  geom_point()+
+  xlim(0,250)+
+  scale_color_brewer(palette="Reds")+ 
+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+p5<-ggplot(aes(x=total.sulfur.dioxide,
+               y=sulphates,color=achl.label),data=df)+
+  geom_point()+
+  xlim(0,250)+
+  scale_color_brewer(palette="Blues")+ 
+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+p6<-ggplot(aes(x=total.sulfur.dioxide,
+               y=sulphates,color=rating),data=df)+
+  geom_point()+
+  xlim(0,250)+
+  scale_color_brewer(palette="Greens")+ 
+theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+grid.arrange(p1,p2,p3,p4,p5,p6,ncol=3)
+
+```
+
+在整个数据集里我发现Sulphates几乎与其他变量没有相关。从数据集中的变量无法或者更多，从图形上也可以无法观察到特别明显的趋势。
+
+
+
+
+### 8.模型建立
+#### 8.1 建立训练集与验证集
 挑选线性关系较强的变量入模，反复调整后，确定入模变量表现最强。
 ```{r}
 library(memisc)
@@ -449,7 +571,7 @@ m1 <- lm(df$quality ~ df$volatile.acidity,data=df)
 m2 <- update(m1,~.+ df$chlorides)
 m3 <- update(m2,~.+ df$total.sulfur.dioxide)
 m4 <- update(m3,~.+ df$pH)
-m5 <- update(m4,~.+ df$sulphates)
+m5 <- update(m4,~.+ df$citric.acid)
 m6 <- update(m5,~.+ df$alcohol)
 mtable(m1,m2,m3,m4,m5,m6)
 
@@ -466,20 +588,108 @@ plot(m6)
 * 3图 点在曲线周围随机分布，残差方差基本不变
 * 4图 残差间相关独立检测。
 
-### 4.模型验证
 
-#### 4.1 通过成分残差图即偏残差图，判断因变量与自变量之间是否呈非线性关系
-从生成的图像来说，因变量和各个自变量的线性关系相对明显，模型效果相对成功。
+
+#### 8.3 模型验证
+通过成分残差图即偏残差图，判断因变量与自变量之间是否呈非线性关系
+从生成的图像来说，因变量和各个自变量的线性关系并不是很明显，模型效果一般。
 ```{r}
 library(car)
 crPlots(m6)
 ```
 
-### 5.反思
+
+
+
+### 9. Multivariate Analysis
+
+**Talk about some of the relationships you observed in this part of the investigation. Were there features that strengthened each other in terms of looking at your feature(s) of interest?**
+我发现alcohol酒精和volatile.acidity这两个变量最可能独立影响葡萄酒的质量。
+
+**Were there any interesting or surprising interactions between features?**
+是的，除了前面讨论的密度，alcohol，我还发现 citric.acid与红酒品质的关系，但是数据量小，且并不全面，导致我无法得出结论。
+
+**OPTIONAL: Did you create any models with your dataset? Discuss the strengths and limitations of your model.**
+是的，效果并不是很好，主要还是数据量小，影响红酒品质，并不仅仅是这些变量就可以起到决定性作用。  
+
+
+### Plot One
+```{r echo=FALSE, Plot_One}
+ggplot(aes(x=alcohol,y=volatile.acidity),data=df)+
+  geom_point(aes(color=rating))+
+  ggtitle("alcohol and volatile against wine quality") +
+scale_color_brewer("RdYlGn")
+
+```
+
+首先,可以看到 volatile.acidity 和 alcohol 是独立的.
+其次，不同品质的红酒的分布是不同的，特别是最差的红酒在左上边，而最好的右下边。
+可以看出随着volatile.acidity上升，酒品质下降。而随着酒精含量上升，酒品质上升。
+
+
+### Plot Two
+```{r echo=FALSE, Plot_Two}
+p1<-ggplot(aes(x=total.sulfur.dioxide,y=alcohol),data=df)+
+  geom_point(alpha=1/5)+
+  geom_smooth(method="lm",color="red")
+  
+p2<-ggplot(aes(x=total.sulfur.dioxide,y=residual.sugar),data=df)+
+  geom_point(alpha=1/5)+
+  geom_smooth(method="lm",color="red")
+ 
+
+p3<-ggplot(aes(x=free.sulfur.dioxide,y=alcohol),data=df)+
+  geom_point(alpha=1/5)+
+  geom_smooth(method="lm",color="red")
+
+p4<-ggplot(aes(x=free.sulfur.dioxide,y=residual.sugar),data=df)+
+  geom_point(alpha=1/5)+
+  geom_smooth(method="lm",color="red")
+
+grid.arrange(p1,p2,p3,p4,ncol=2)
+```
+
+可以看到total.sulfur.dioxide与alcohol/residual.sugar 之间有意向不到的线性关系
+
+### Plot Three
+```{r echo=FALSE, Plot_Three}
+p1<-ggplot(aes(x=fixed.acidity,
+               y=citric.acid,color=rating),data=df)+
+  geom_point()+
+  xlim(2,12)+
+  ylim(0,1.2)+
+  ggtitle("fixed.acidity and citric.acid vs wine quality") +
+scale_color_brewer("RdYlGn")
+
+
+p2<-ggplot(aes(x=fixed.acidity,
+               y=citric.acid,color=rating),
+           data=subset(df,
+                       df$rating=="bad" | df$rating=="good"))+
+  geom_point()+
+  xlim(2,12)+
+  ylim(0,1.2)+
+  ggtitle("fixed.acidity and citric.acid vs good/bad wines")
+
+grid.arrange(p1,p2)
+```
+
+The corelation with wine quality is weak, comparing with alcohol and volatile.acidity one. Besides the sample size is small (180 good vs 183 bad) Bigger sample size must reveal more. We can't  conclude citric.acid do play a role. However, as one of the most common additive, it's not a surprise if it indeed does. I am wondering whether its effect is partially covered by its corelation with others,for example fixed.acidity, which has  very weak negative relationship with quality.  But it's another very interesting topic.
+
+比较alcohol和volatile.acidity的关系
+
+
+
+
+
+
+
+### 10.反思
     前面也提过本数据集，变量只是红酒主要的基本成分，并没有微量成分，由葡萄酒的品尝原理我们知道，葡萄酒中的微量成分是香气和滋味成分中最主要的部分，这些成分数目极大而浓度极小。这可能对我们的分析会造成不利的影响，即体现红酒质量的自变量缺失了，某些甚至可能是重要的变量。
     而且在数据量上，由于本数据样本较小，且红酒品质多数集中5，6级的评级，且分布较为平均，不是能很好的分析出影响一瓶好红酒有哪些因素。
     其次建模方法上，我先观察了变量之间的线性关系，挑选了线性关系较强的变量，从多元线性建立模型，反复调整后，最终选择了表现最强的变量入模。
-    经过模型验证，说明模型效果。
+    经过模型验证，说明模型效果一般。
+    
     但是模型效果的好坏的决定因素是变量，变量的有效性，数据量都先天决定了模型的效果，和将来的实际应用。今后应该进一步去收集很多的变量及数据量，将对模型的建立有良好的促进效果。
 
  
