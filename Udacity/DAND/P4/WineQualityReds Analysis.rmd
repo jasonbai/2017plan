@@ -674,10 +674,9 @@ p2<-ggplot(aes(x=fixed.acidity,
 grid.arrange(p1,p2)
 ```
 
-The corelation with wine quality is weak, comparing with alcohol and volatile.acidity one. Besides the sample size is small (180 good vs 183 bad) Bigger sample size must reveal more. We can't  conclude citric.acid do play a role. However, as one of the most common additive, it's not a surprise if it indeed does. I am wondering whether its effect is partially covered by its corelation with others,for example fixed.acidity, which has  very weak negative relationship with quality.  But it's another very interesting topic.
 
-比较alcohol和volatile.acidity的关系
 
+比较fixed.acidity和citric.acid的关系，随着citric.acid提高，对红酒品质略微提升，而fixed.acidity的变化，好坏区分度并不好。样本数据量还是太少，无法明显的看出来我预期想要的。
 
 
 
