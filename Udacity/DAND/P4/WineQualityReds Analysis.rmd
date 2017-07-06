@@ -676,7 +676,7 @@ grid.arrange(p1,p2)
 
 
 
-比较fixed.acidity和citric.acid的关系，随着citric.acid提高，对红酒品质略微提升，而fixed.acidity的变化，好坏区分度并不好。样本数据量还是太少，无法明显的看出来我预期想要的。
+比较fixed.acidity和citric.acid的关系，随着citric.acid提高，对红酒品质略微提升，而fixed.acidity的变化，好坏区分度并不好。样本数据量还是太少，无法明显的看出来我预期想要的。 
 
 
 
