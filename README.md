@@ -46,7 +46,7 @@
   - [x] P1 ____ *2017.3.2 finished*
   - [x] P2 ____ *2017.4.9 finished*
   - [x] P3 ____ *2017.5.25 finished*
-  - [ ] P4
+  - [x] P4 ____ *2017.7.10 finished*
   - [ ] P5
   - [x] P6____ *2017.6.25 finished*
   - [x] P7 ____ *2017.3.20 finished*
