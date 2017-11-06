@@ -22,7 +22,6 @@ from feature_format import featureFormat, targetFeatureSplit
 from tester import dump_classifier_and_data, test_classifier
 
 
-
 pd.set_option('display.max_columns', None)
 
 ### Load the dictionary containing the dataset
@@ -34,11 +33,17 @@ df = pd.DataFrame.from_dict(data_dict, orient='index')
 df.replace('NaN', np.nan, inplace = True)
 
 df.info()
+
 df.poi[df.poi==1]
+
 df.plot.scatter(x = 'salary', y = 'bonus')
+
 df['salary'].idxmax()
+
 df.drop('TOTAL', inplace = True)
 df.plot.scatter(x = 'salary', y = 'bonus')
+
+
 df['fraction_from_poi'] = df['from_poi_to_this_person'] / df['to_messages']
 df['fraction_to_poi'] = df['from_this_person_to_poi'] / df['from_messages']
 
@@ -52,6 +57,14 @@ features_list = ['poi', 'salary', 'bonus', 'long_term_incentive', 'deferred_inco
                  'exercised_stock_options', 'restricted_stock', 'restricted_stock_deferred', 
                  'total_stock_value', 'to_messages', 'from_messages', 'from_this_person_to_poi', 
                  'from_poi_to_this_person', 'shared_receipt_with_poi', 'fraction_from_poi', 'fraction_to_poi']
+
+### Load the dictionary containing the dataset
+filled_df = df.fillna(value='NaN') # featureFormat expects 'NaN' strings
+data_dict = filled_df.to_dict(orient='index')
+
+### Store to my_dataset for easy export below.
+my_dataset = data_dict
+
 data = featureFormat(my_dataset, features_list)
 
 labels, features = targetFeatureSplit(data)
@@ -59,6 +72,7 @@ labels, features = targetFeatureSplit(data)
 ### split data into training and testing datasets
 from sklearn import cross_validation
 features_train, features_test, labels_train, labels_test = cross_validation.train_test_split(features, labels, test_size=0.5, random_state=1)
+
 
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score
@@ -82,6 +96,7 @@ indices = np.argsort(importances)[::-1]
 print('Feature Ranking: ')
 for i in range(16):
     print("{} feature {} ({})".format(i+1,features_list[i+1],importances[indices[i]]))
+    
     
 features_list2 = ["salary", "bonus", "fraction_from_poi", "fraction_to_poi", 'deferral_payments', \
                  'total_payments', 'loan_advances', 'restricted_stock_deferred', 'deferred_income', 'total_stock_value']
