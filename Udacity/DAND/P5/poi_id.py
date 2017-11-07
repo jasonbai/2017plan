@@ -53,9 +53,9 @@ df[df['poi'] == True].plot.scatter(x='fraction_from_poi', y='fraction_to_poi', c
 
 ### The first feature must be "poi".
 features_list = ['poi', 'salary', 'bonus', 'long_term_incentive', 'deferred_income', 'deferral_payments',
-                 'loan_advances', 'other', 'expenses', 'director_fees', 'total_payments', 
-                 'exercised_stock_options', 'restricted_stock', 'restricted_stock_deferred', 
-                 'total_stock_value', 'to_messages', 'from_messages', 'from_this_person_to_poi', 
+                 'loan_advances', 'other', 'expenses', 'director_fees', 'total_payments',
+                 'exercised_stock_options', 'restricted_stock', 'restricted_stock_deferred',
+                 'total_stock_value', 'to_messages', 'from_messages', 'from_this_person_to_poi',
                  'from_poi_to_this_person', 'shared_receipt_with_poi', 'fraction_from_poi', 'fraction_to_poi']
 
 ### Load the dictionary containing the dataset
@@ -96,13 +96,13 @@ indices = np.argsort(importances)[::-1]
 print('Feature Ranking: ')
 for i in range(16):
     print("{} feature {} ({})".format(i+1,features_list[i+1],importances[indices[i]]))
-    
-    
+
+
 features_list2 = ["salary", "bonus", "fraction_from_poi", "fraction_to_poi", 'deferral_payments', \
                  'total_payments', 'loan_advances', 'restricted_stock_deferred', 'deferred_income', 'total_stock_value']
 data2 = featureFormat(my_dataset, features_list2)
 
- 
+
 labels2, features2 = targetFeatureSplit(data2)
 
 ### split data into training and testing datasets
@@ -164,6 +164,19 @@ print("Recall: ", recall_score(labels_test3, pred))
 
 print("NB algorithm time:", round(time()-t0, 3), "s")
 
+
+t0 = time()
+param_grid = {
+         'min_samples_split': [2, 3, 4, 5, 6, 7, 8],
+          'max_depth': [1, 2, 3, 4, 5, 6, 7, 8],
+            'max_features': range(3,5)
+          }
+clf = GridSearchCV(DecisionTreeClassifier(), param_grid)
+clf = clf.fit(features_train, labels_train)
+print "Best estimator found by grid search:"
+print clf.best_estimator_
+print 'Running time: ', round(time()-t0, 3), 's'
+
 # 特征列表
 features_list = ["poi", "fraction_from_poi", "fraction_to_poi", "shared_receipt_with_poi"]
 
@@ -192,7 +205,7 @@ for train_indices, test_indices in kf:
     labels_train=[labels[ii] for ii in train_indices]
     labels_test=[labels[ii] for ii in test_indices]
 
-    
+
 # 决策树
 from sklearn.tree import DecisionTreeClassifier
 
