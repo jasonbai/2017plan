@@ -39,9 +39,9 @@
   - [x] lesson 3 ____ *2017.2.10 finished*
   - [x] lesson 4 ____ *2017.2.12 finished*
   后续并入[数据分析师](https://cn.udacity.com/course/data-analyst-nanodegree--nd002)课程
-- [ ] Udacity [推论统计学入门](https://cn.udacity.com/course/linear-algebra-refresher-course--ud953) 约48h
-- [ ] Udactiy [数据科学入门](https://cn.udacity.com/course/intro-to-data-science--ud359) 约48h
-- [ ] Udactiy 纳米学位-[数据分析师](https://cn.udacity.com/course/data-analyst-nanodegree--nd002) 约 240h
+- [x] Udacity [推论统计学入门](https://cn.udacity.com/course/linear-algebra-refresher-course--ud953) 约48h
+- [x] Udactiy [数据科学入门](https://cn.udacity.com/course/intro-to-data-science--ud359) 约48h
+- [x] Udactiy 纳米学位-[数据分析师](https://cn.udacity.com/course/data-analyst-nanodegree--nd002) 约 240h
   - [x] P0 ____ *2017.2.15 finished*
   - [x] P1 ____ *2017.3.2 finished*
   - [x] P2 ____ *2017.4.9 finished*
@@ -98,3 +98,4 @@
 - 2017年1月15日  [个人站点](http://jasonbai.me) 上线，http://jasonbai.me
 - 2017年2月7日  [完结《计算机科学导论》](http://www.jasonbai.com/2017/02/07/intro-to-computer-science--note)
 - 2017年5月29日  入手 Dell Precision 3250
+- 2017年11月10日 获得Udacity数据分析师纳米学位证书
